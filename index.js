@@ -44,10 +44,12 @@ function createAccount() {
     }
     else {
         if (user_name.trim().length !== 0) {
-            userstore.push(user);
-            localStorage.setItem("accounts", JSON.stringify(userstore));
-            localStorage.setItem('loggedIn' , name.value);
-            window.location.replace('blog.html');
+              userstore.push(user);
+              localStorage.setItem("accounts", JSON.stringify(userstore));
+            //keep value of the authenticated user in localStorage variable loggedIn
+              localStorage.setItem('loggedIn' , name.value);
+            //direct to the blog.html page for this new user
+              window.location.replace('blog.html');
 
         } else {
             alert("Your todo is empty")
@@ -66,9 +68,12 @@ function login() {
 
     if (userstore.find(element => element.user_name === auth_name.value)) {
         if ((userstore.find(element => element.user_name === auth_name.value && element.user_password === auth_pass.value))) {
-              localStorage.setItem('loggedIn' , auth_name.value);
-              window.location.replace('blog.html');
-              displayTodo();
+              //keep value of the authenticated user in localStorage variable loggedIn
+                localStorage.setItem('loggedIn' , auth_name.value);
+              //direct to the blog.html page after login
+                window.location.replace('blog.html');
+              //call displayTodo to display the blogs for this authenticated user
+                displayTodo();
         }
         else {
             alert('incorrect password')
@@ -81,8 +86,9 @@ function login() {
 }
 
 function logout(){
-  localStorage.removeItem('loggedIn');
-  window.location.replace('login.html');
+  //destroy the localstorage variable loggedIn when logging out
+    localStorage.removeItem('loggedIn');
+    window.location.replace('login.html');
 }
 
 
@@ -117,19 +123,20 @@ function createTodoStore() {
 createTodoStore();
 //* create Todo
 function createTodo() {
-  //localStorage.getItem('loggedIn')
+  
   let todostore = createTodoStore();
 
-  //alert(JSON.parse(localStorage.getItem("todos")));
-  const todoinputValue = {
-              user_name : localStorage.getItem('loggedIn'),
-              blogvalue : inputEl.value
-  };
+  //create an object which has the authenticated user and the blog he has posted
+    const todoinputValue = {
+                user_name : localStorage.getItem('loggedIn'),
+                blogvalue : inputEl.value
+    };
 
-  //alert(JSON.stringify(todoinputValue));
   if (inputEl.value.trim().length !== 0) {
+    //push the created object into the todstore array as a string using stringify
     todostore.push(JSON.stringify(todoinputValue));
     localStorage.setItem("todos", JSON.stringify(todostore));
+    //display blogs 
     displayTodo();
     deleTodo();
       updateTodo();
@@ -144,29 +151,39 @@ function createTodo() {
 function displayTodo() {
   let todostore = createTodoStore();
   todos.innerHTML = "";
+  count = 0;
   todostore.forEach(function (todoitem, itemid) {
-    const singleTodo = document.createElement("p");
-    const delbtn = document.createElement("button");
-    const updatebtn = document.createElement("button");
+    
+      const singleTodo = document.createElement("p");
+      const delbtn = document.createElement("button");
+      const updatebtn = document.createElement("button");
 
-    delbtn.innerHTML = "delete";
-    delbtn.className = "btn btn-danger delBtn";
+      orla = JSON.parse(todoitem);
+      if(orla.user_name === localStorage.getItem('loggedIn')){
+        singleTodo.style.display = "block";
+      }
+      else{
+        singleTodo.style.display = "none";
+      }
+    
 
-    orla = JSON.parse(todoitem);
-    if(orla.user_name === localStorage.getItem('loggedIn')){
+      delbtn.innerHTML = "delete";
+      delbtn.className = "btn btn-danger delBtn";
 
-        singleTodo.innerText = orla.blogvalue;
-        updatebtn.innerHTML = "update";
-        updatebtn.className = "btn btn-warning updateBtn";
+  
+      singleTodo.innerText = orla.blogvalue;
+      updatebtn.innerHTML = "update";
+      updatebtn.className = "btn btn-warning updateBtn";
 
-        singleTodo.innerHTML = `<span>${orla.blogvalue}</span>`;
-        singleTodo.appendChild(delbtn);
-        singleTodo.appendChild(updatebtn);
+      singleTodo.innerHTML = `<span>${orla.blogvalue}</span>`;
+      singleTodo.appendChild(delbtn);
+      singleTodo.appendChild(updatebtn);
 
-        delbtn.className = `btn btn-danger delBtn ${itemid} `;
-
+      delbtn.className = `btn btn-danger delBtn ${itemid} `;
+      
         todos.appendChild(singleTodo); //inject each todo within the div of class todos.
-    }
+      
+      
   });
 }
 
@@ -178,14 +195,17 @@ function updateTodo() {
 
   updateButtons.forEach(function (button, index) {
     button.onclick = function () {
+      //alert(index);
+      //alert(todostore);
       const todo = this.parentElement.children[0];
+      //alert(todo.innerText);
       const updateTodo = prompt(`updateTODO :${todo.innerText}`);
       const blognow = {
         user_name : localStorage.getItem('loggedIn'),
         blogvalue : updateTodo
-      }
-    ;
+      };
       todostore.splice(index, 1, JSON.stringify(blognow));
+      //alert(todostore)
       localStorage.setItem("todos", JSON.stringify(todostore));
       displayTodo();
       location.reload();
