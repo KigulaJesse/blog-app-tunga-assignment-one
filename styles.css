@@ -1,0 +1,40 @@
+
+.index h1, .login h1{
+    text-align: center;
+    
+    color: chocolate;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.index .name ,.index .password{
+    font-size: 16px;
+    /* border:none;
+    border-bottom: black solid; */
+    border-width: thin;
+    /* margin-bottom: 20px; */
+}
+.login.loginname, .login.loginpassword{
+    font-size: 16px;
+    /* border:none;
+    border-bottom: black solid; */
+    border-width: thin;
+    margin-bottom: 10px;
+    color: navy;
+}
+.index label ,.login label{
+    text-align: left;
+   margin-right:0px;
+   font-size:16px
+}
+
+.index button ,.login button{
+    
+    margin-right:50px;
+    color:black;
+    border-radius: 10px;
+    font-size: 16px;
+    width:100px;
+    height:40px;
+    background-color: chocolate;
+    border: none;
+    /* margin-right: 30px; */
+}

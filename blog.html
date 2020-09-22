@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <title>Simple Todo App</title>
+  </head>
+  <body>
+    <div class="container mx-auto">
+      <h1>Simple Todo App  <button onclick = "logout()">Logout</button></h1>
+      <input class="inputEl form-control fpr,form-control-sm" value="" required/><br />
+      <button class="btn btn-lg btn-success addToDoBtn">Add Todo</button>
+      <h4 class="mt-3">Our Todos</h4>
+      <hr />
+      <div class="todos mt-3"></div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
