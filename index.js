@@ -158,6 +158,7 @@ function displayTodo() {
       const delbtn = document.createElement("button");
       const updatebtn = document.createElement("button");
 
+      //if the user is  authenticated and this is one of his/her blogs, display his blog else hide that blog from her/him
       orla = JSON.parse(todoitem);
       if(orla.user_name === localStorage.getItem('loggedIn')){
         singleTodo.style.display = "block";
